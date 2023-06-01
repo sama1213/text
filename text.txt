@@ -1,0 +1,626 @@
+// TOOLBOOTH
+class TollBooth {
+	private static totalCars: number = 0;
+	private static totalAmount: number = 0;
+
+	public payingCar(): void {
+		TollBooth.totalCars++;
+		TollBooth.totalAmount += 50;
+	}
+
+	public nopayCar(): void {
+		TollBooth.totalCars++;
+	}
+
+	public display(): void {
+		console.log(`Total numbers of cars passed the Bridge : ${TollBooth.totalCars}`);
+		console.log(`Total amount collected from Toll Booth : ${TollBooth.totalAmount}`);
+	}
+}
+
+function sample(...inputs: ('p' | 'n')[]) {
+	const obj = new TollBooth();
+
+	for (const input of inputs) {
+		if (input == 'p') {
+			obj.payingCar();
+		}
+		else {
+			obj.nopayCar();
+		}
+	}
+	obj.display();
+}
+
+sample('p', 'p', 'n');
+
+
+	// SAFE ARRAY
+export { }
+
+class SafeArray {
+	private arr: number[] = [];
+	private indexCount: number[] = [];
+	private wrongEttemptCount: number = 0;
+
+	public putElement(index: number, value: number) {
+		if (index >= 5 || index < 0) {
+			this.indexCount.push(index);
+			this.wrongEttemptCount += 1;
+			this.displayMessage();
+		}
+		else {
+			this.arr[index] = value;
+
+		}
+	}
+
+	public getElement(index: number): number {
+		if (index < 0 || index >= 5) {
+			return -1;
+		}
+		else {
+			return this.arr[index];
+		}
+	}
+
+	public displayMessage() {
+		console.log(`No valid index ${this.wrongEttemptCount} failed ettempt and attempts are ${this.showEttempt()}`)
+	}
+
+	public showEttempt() {
+		let attempts: string = "";
+		this.indexCount.forEach(item => {
+			attempts += item + " ";
+		})
+		return attempts;
+	}
+}
+
+let safeArr = new SafeArray();
+
+safeArr.putElement(2, 0);
+safeArr.putElement(12, 12);
+safeArr.getElement(2);
+safeArr.putElement(13, 123);
+
+
+	// FILTERED ACCOUNT
+class account {
+	protected accountNo: number;
+	constructor(accountNo: number) {
+		this.accountNo = accountNo;
+	}
+	public process(transaction: Transaction): boolean {
+		if (transaction.value() > 0) {
+			return true;
+		}
+		return false;
+	}
+}
+class Transaction {
+	protected amount: number;
+	constructor(amount: number) {
+		this.amount = amount;
+	}
+	public value(): number {
+		return this.amount;
+	}
+}
+class FilterAccount extends account {
+	protected fillteraccount: number;
+	constructor(acccount: number) {
+		super(acccount);
+		this.fillteraccount = 0;
+	}
+	public process(transaction: Transaction): boolean {
+		if (transaction.value() == 0) {
+			this.fillteraccount++;
+			return true;
+		}
+		else {
+			return super.process(transaction);
+		}
+	}
+	public filterCount(): number {
+		return this.fillteraccount;
+	}
+}
+let n = new Transaction(30);
+let m = new FilterAccount(234);
+let res = m.process(n);
+console.log(res);
+console.log(m.filterCount());
+
+
+	// GENERIC STACK
+HTML-
+<body>
+    <div class="MainDiv">
+        <button id="pushBtn">Push Element</button>
+        <button id="popBtn">Pop Element</button>
+        <button id="countBtn">Count Element</button>
+        <button id="isEmptyBtn">Is Empty</button>
+        <button id="peekBtn">Peek Element</button>
+        <div id="displayDiv">
+   
+        </div>
+    </div>
+    <script src="./Demo.js"></script>
+</body>
+
+TS-
+class Stack<T>{
+	private stack: T[] = [];
+	private countEle: number = 0;
+
+	public push(ele: T) {
+		this.stack.unshift(ele);
+		this.countEle++;
+	}
+
+	public pop() {
+		let ele = this.stack[0];
+		this.stack.shift();
+		this.countEle--;
+		return ele;
+	}
+
+	public count() {
+		return this.countEle;
+	}
+
+	public peek() {
+		if (this.stack.length == 0) return -1;
+		return this.stack[0];
+	}
+
+	public isEmpty() {
+		return this.stack.length == 0 ? true : false;
+	}
+
+	public getArr() {
+		return this.stack;
+	}
+}
+
+let stk = new Stack();
+
+let pushBtn = document.getElementById("pushBtn") as HTMLInputElement;
+let popBtn = document.getElementById("popBtn") as HTMLInputElement;
+let countBtn = document.getElementById("countBtn") as HTMLInputElement;
+let peekBtn = document.getElementById("peekBtn") as HTMLInputElement;
+let isEmptyBtn = document.getElementById("isEmptyBtn") as HTMLInputElement;
+let displayDiv = document.getElementById("displayDiv") as HTMLInputElement;
+
+
+
+pushBtn?.addEventListener("click", (e) => {
+	e.preventDefault();
+	let ele = prompt("Enter elment :");
+	stk.push(ele);
+	displayDiv.innerHTML = `All stack elements are ${stk.getArr().toString()}`;
+
+})
+
+popBtn?.addEventListener("click", (e) => {
+	e.preventDefault();
+	displayDiv.innerHTML = `Popped element is ${stk.pop()}`
+})
+
+peekBtn?.addEventListener("click", (e) => {
+	e.preventDefault();
+	let ele = stk.peek();
+	displayDiv.innerHTML = `Peek element is ${ele}`
+})
+
+isEmptyBtn?.addEventListener("click", (e) => {
+	e.preventDefault();
+	let res = stk.isEmpty();
+	if (res) displayDiv.innerHTML = "Stack is Empty";
+	else displayDiv.innerHTML = "Stack is not Empty";
+})
+
+countBtn?.addEventListener("click", (e) => {
+	e.preventDefault();
+	let count = stk.count();
+	displayDiv.innerHTML = `Total elements are ${count}`
+})
+
+
+	// INSERT ARRAY - PROMPT
+HTML- 
+	<input type="text" id="insertid">
+    <button id="insertbtn">Insert</button><br>
+    <input type="text" id="deleteid">
+    <button id="deletebtn">Insert</button>
+    <h1 id="res"></h1>
+    <script src="insertArray.js"></script>
+TS-
+const inputval = document.querySelector('#insertid') as HTMLInputElement;
+const deleteval = document.querySelector('#deleteid') as HTMLInputElement;
+const inputbtn = document.querySelector('#insertbtn') as HTMLButtonElement;
+const deletebtn = document.querySelector('#deletebtn') as HTMLButtonElement;
+
+let arr:number[] = [];
+
+inputbtn.addEventListener('click',()=>{
+    const insertN :number = parseInt(inputval.value);
+    for(let i=0;i<insertN;i++){
+        const val = parseInt(window.prompt("insert Number only")!);
+        if(val) arr.push(val);
+    }
+    display(arr);
+})
+deletebtn.addEventListener('click',()=>{
+    const val:number = parseInt(deleteval.value);
+    for(let i=0;i<val;i++){
+        const v = parseInt(window.prompt("delete element")!);
+        arr = arr.filter((ele)=>{
+            if(v!=ele) return true;
+        })
+    }
+    display(arr);
+})
+const res = document.querySelector("#res") as HTMLHeadingElement;
+const display=(data:number[])=>{
+    res.innerHTML="";
+    data.forEach((ele)=>{
+        res.innerHTML+=ele+" ";
+    });
+}
+
+
+	// ITENARY-DAY  
+HTML-
+<body>
+    <div class="MainDiv">
+        <select id="select" value="">
+            
+        </select>
+        <div id="sectionDiv">
+
+        </div>
+    </div>
+    <script src="Demo.js"></script>
+</body>
+
+TS-
+let arr=[
+    {"Day1":"Reach to Destination"},
+    {"Day2":"city tour in a company tourist bus"},
+    {"Day2":"Breakfast and Dinner"},
+    {"Day3":"Visit Chang-la"},
+    {"Day4":"Back to your home"},
+    {"Day5":"Again go to Destination"}
+]
+
+
+let selectEle=document.getElementById("select") as HTMLInputElement;
+let sectionDiv=document.getElementById("sectionDiv") as HTMLInputElement;
+
+
+selectEle?.addEventListener("change",(item)=>{
+    let key=selectEle.value;
+    sectionDiv.innerHTML="";
+    displayAllContent(key);
+})
+
+function displayAllContent(key:string){
+    arr.forEach(item=>{
+        if(Object.keys(item)[0] == key){
+            sectionDiv.appendChild(createCard(item[key]));
+
+        }
+    })
+}
+
+function createCard(content:string){
+    let card=document.createElement("div");
+    card.innerHTML=content;
+    return card;
+}
+
+function createOption(key:string){
+    let option=document.createElement("option");
+    option.value=key;
+    option.innerHTML=key;
+    return option;
+
+}
+
+function createSelect(){
+    let set:String[]=[];
+    arr.forEach(item=>{
+        if(set.indexOf(Object.keys(item)[0]) == -1){
+            let option=createOption(Object.keys(item)[0]);
+            selectEle?.appendChild(option);
+            set.push(Object.keys(item)[0]);
+        }
+    })
+
+    console.log(set);
+}
+createSelect();
+
+displayAllContent(Object.keys(arr[0])[0]);
+
+
+	// PRODUCT/BOOK SEARCH
+HTML-
+<body>
+	<h1>Book Search</h1>
+	<label for="searchInput">Search by Title:</label>
+	<input type="text" id="searchInput" oninput="searchYourBook()">
+	<div id="results"></div>
+	<script src="./Demo.js"></script>
+</body>
+
+TS-
+var books = [
+	{ "title": "My Talented Book", "author": "ABC" },
+	{ "title": "My Third Book", "author": "XYZ" },
+	{ "title": "First Book", "author": "CDE" }
+];
+
+var searchInput = document.getElementById("searchInput") as HTMLInputElement;
+var resultsDiv = document.getElementById("results") as HTMLDivElement;
+
+function searchYourBook(): void {
+	var searchQuery: string = searchInput.value.toLowerCase();
+	resultsDiv.innerHTML = "";
+	var matchingBooks = books.filter(function (book) { return book.title.toLowerCase().includes(searchQuery); });
+	matchingBooks.forEach(function (book): void {
+		var result: HTMLDivElement = document.createElement("div");
+		result.textContent = book.title + " - " + book.author;
+		resultsDiv.appendChild(result);
+	});
+}
+
+
+	// PRODUCT DETAILS
+HTML-
+<body>
+	<h1>Product Catalog</h1>
+	<label for="product-select">Select a product:</label>
+	<select id="product-select" onchange="disDetails()">
+		<option value="">Select Product</option>
+	</select>
+	<div id="product-details"></div>
+</body>
+
+TS-
+const products = [
+			{ "title": "Product1", "image": "https://picsum.photos/200", "price": 380, "description": "first product" },
+			{ "title": "Product2", "image": "https://picsum.photos/200", "price": 980, "description": "second product" },
+			{ "title": "Product3", "image": "https://picsum.photos/200", "price": 1200, "description": "third product" }
+		];
+		function displayProducts() {
+			const pSel = document.getElementById("product-select");
+			pSel.innerHTML = "";
+			products.forEach(product => {
+				const option = document.createElement("option");
+				option.value = product.title;
+				option.text = product.title;
+				pSel.add(option);
+			});
+		}
+		function disDetails() {
+			const pSel = document.getElementById("product-select");
+			const selProTitle = pSel.value;
+			const proDel = document.getElementById("product-details");
+			proDel.innerHTML = "";
+			const selPro = products.find(product => product.title === selProTitle);
+			if (selPro) {
+				const title = document.createElement("h2");
+				title.innerText = selPro.title;
+				const image = document.createElement("img");
+				image.src = selPro.image;
+				const price = document.createElement("p");
+				price.innerText = "Price: $" + selPro.price;
+				const description = document.createElement("p");
+				description.innerText = selPro.description;
+				
+				proDel.appendChild(title);
+				proDel.appendChild(image);
+				proDel.appendChild(price);
+				proDel.appendChild(description);
+			}
+		}
+		displayProducts();
+
+
+	// STOPWATCH
+import React, {  useEffect, useState } from 'react';
+
+function Set() {
+    const[num,setNum]=useState(0);
+    const[run,setRun]=useState(false);
+    const[laps,setLaps]=useState([`Time`]);
+    useEffect(()=>{
+        let intervalId:any;
+       if(run){
+          intervalId= setInterval(()=>{
+            setNum(num=>num+1)
+           },10);
+       }
+       return () => {
+        clearInterval(intervalId);
+      };
+    },[run])
+    function time(){
+        let hour=Math.floor(num / 3600);
+        let minute=Math.floor(num / 60);
+        let sec=num % 60;
+        return `${hour}:${minute}:${sec}`;
+    }
+    function lap(num:any){
+        console.log(num);
+        let count=time();
+        setLaps([...laps,count]);
+        console.log(laps);
+        
+    }
+    function reset(){
+        setNum(0);
+        setRun(false);
+        setLaps([``]);
+    }
+  return (
+    <>
+        <div>{
+            run?(
+                <button onClick={()=>{setRun(false)}}>Stop</button>
+            ):(
+                <button onClick={()=>{setRun(true)}}>Start</button>
+            )
+
+        }
+        <button onClick={()=>{lap(num)}}>Lap</button>
+        <button onClick={()=>{reset()}}>Reset</button>
+        </div>
+        
+      <h1>{time()}</h1>
+      {
+          
+            laps.map((item,index)=>{
+              return  <li key={index}>{item}</li>
+            })
+        
+      }
+    </>
+  )
+}
+
+export default Set;
+
+
+	// FETHC API/JSON
+PART-1 WITH GIVEN JSON DATA
+import { useEffect } from "react";
+
+const Person=()=>{
+    const arr :any[] = [{
+        "id": 1,
+        "name": "Leanne Graham",
+        "username": "Bret",
+        
+      },
+      {
+        "id": 2,
+        "name": "Ervin Howell",
+        "username": "Antonette",
+        
+      }];
+      
+    return (
+        <>
+            {
+                arr.map((ele:any)=>{
+                    return <li>{ele.id}</li>
+                })
+            }
+        </>
+    )
+}
+export default Person;
+
+PART-2 USING API
+import { useEffect, useState } from "react";
+
+const End = ()=>{
+
+    const [user,setUser]=useState([""])
+    useEffect(()=>{
+        fetch("https://jsonplaceholder.typicode.com/users").then((data)=>{
+            return data.json();
+        }).then((ele)=>{
+            setUser(ele);
+        })
+    })
+    return(
+        <>
+          {
+                 user.map((ele:any)=>{
+                return <li>{ele.name}  {ele.username}</li>
+            })
+          }
+        </>
+    );
+}
+
+export default End;
+
+
+	// TODO
+HTML-
+
+<body>
+	<div id="container">
+		<h1 id="header">TODO App</h1>
+		<div>
+			<input type="text" id="inputFild" />
+			<button id="btn">Add</button>
+		</div>
+		<div id="listContainer"></div>
+	</div>
+	<script src="./src/index.js"></script>
+</body>
+
+TS-
+const inputFild = document.getElementById("inputFild") as HTMLInputElement;
+const btn = document.getElementById("btn") as HTMLButtonElement;
+/*
+inputFild.addEventListener("keyup", (e) => {
+const inputData: string = (e.target as HTMLInputElement).value;
+
+});*/
+const listContainer = document.getElementById(
+"listContainer"
+) as HTMLDivElement;
+
+btn.addEventListener("click", () => {
+const inputData: string = (inputFild as HTMLInputElement).value.trim();
+if (inputData == "") return;
+const div = document.createElement("div") as HTMLDivElement;
+const checkbox = document.createElement("input") as HTMLInputElement;
+const title = document.createElement("h2") as HTMLHeadElement;
+const deletebBTN = document.createElement("i") as HTMLParagraphElement;
+const lebel = document.createElement("label") as HTMLLabelElement;
+
+title.innerHTML = `${inputData}`0;
+deletebBTN.innerHTML = "Delete";
+
+deletebBTN.setAttribute("id", "removeBtn");
+
+// lebel.setAttribute();
+
+deletebBTN.addEventListener("click", () => {
+listContainer.removeChild(div);
+}); ///solved
+
+checkbox.addEventListener("click", () => {
+if (title.style.textDecorationLine !== "line-through") {
+title.style.textDecorationLine = "line-through";
+} else {
+title.style.textDecorationLine = "none";
+}
+});
+
+checkbox.setAttribute("type", "checkbox");
+div.setAttribute("class", "items");
+
+lebel.appendChild(checkbox);
+lebel.appendChild(title);
+div.appendChild(lebel);
+div.appendChild(deletebBTN);
+
+listContainer.appendChild(div);
+console.log(div);
+(inputFild as HTMLInputElement).value = "";
+});
+
+
+    
+
+////////////////////////////////////////////////////////////////
